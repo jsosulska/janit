@@ -21,19 +21,18 @@ type Command struct {
 func (c *Command) init() {
 	// Commented out till I have flags
 	c.flags = flag.NewFlagSet("", flag.ContinueOnError)
+	c.help = help
 	// c.flags.StringVar(&c.flagHello, "Hello", "",
 	// "Help!")
-
-	c.help = c.Help()
 }
 
 func (c *Command) Run(args []string) int {
 	c.once.Do(c.init)
-	if err := c.flags.Parse(args); err != nil {
-		return 1
-	}
+	//if err := c.flags.Parse(args); err != nil {
+	//	return 1
+	//}
 
-	fmt.Println("validate good to go!")
+	fmt.Println("Validation good to go!")
 	return 0
 }
 
@@ -44,4 +43,9 @@ func (c *Command) Help() string {
 
 func (c *Command) Synopsis() string { return synopsis }
 
-const synopsis = "Any workflows that validate expected inputs."
+const synopsis = "Any workflow involving comparing templates."
+
+const help = `
+Usage: janit validate [options]
+  Use Janit to manage validation workflows for GitHub.
+`
