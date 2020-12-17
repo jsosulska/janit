@@ -19,7 +19,8 @@ If not, give a on-liner to create/pull this from an existing repo.
 Provide a path or use the local repo from where the command is called.
 On every run, diff labels from github and file. Warn on the diff.
 
-## Template & Git commit message compare: `janit compare [`.github/ISSUE_TEMPLATE/*`] [URL/SHA]
+## Template & Git commit message compare: 
+### `janit compare [`.github/ISSUE_TEMPLATE/*`] [URL/SHA]
 A binary that takes a local input (Issue Template, Git Commit template, label
 lookup table), and does a comparison against what is submitted to GitHub.
 Compare is considered to be the top level workflow. When used as a GitHub 
@@ -64,8 +65,8 @@ Provide a set of label rules that can be attached to them.
 "I am not sure" - suggest but not apply tags.
 If no strings from validation, then fail the issue.
 Output whats missing, output recommend labels. 
-Label applier:
-janit labels apply [GHIssue#]
+## Label applier:
+### janit labels apply [GHIssue#]
 Once:
 template is verified
 Lookup table has no errors
@@ -73,5 +74,10 @@ Label exists as code in .github
 Apply to issue.
 
 ## Project Layout
-- `build` - Used to store build configurations for CI and dockerfiles.
 - `bin` - Ignored by git, but place your build artifacts here.
+- `build` - Used to store build configurations for CI and dockerfiles.
+- `cmd` - Commands used by the tool.
+- `configs`- Used as example configurations.
+- `docs` - Used to store documentation.
+- `internal` - For packages that are not meant to be shared.
+- `pkg` - Packages for the tool.
