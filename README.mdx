@@ -1,0 +1,77 @@
+# JanIT
+
+janIT is the _Jan_ itor for G_it_. It aims to provide simple CLI for common Workflows on GitHub. Janit assumes that all commands are in the current working directory.
+
+## Install
+
+## Try It
+
+## Documented Workflows
+
+### Labels as Code: 
+
+> `janit labels init`
+
+This workflow checks if there is a labels file as code. The default file is
+`./.github/janit/labels.json`
+
+If not, give a on-liner to create/pull this from an existing repo.
+Provide a path or use the local repo from where the command is called.
+On every run, diff labels from github and file. Warn on the diff.
+
+## Template & Git commit message compare: `janit compare [`.github/ISSUE_TEMPLATE/*`] [URL/SHA]
+A binary that takes a local input (Issue Template, Git Commit template, label
+lookup table), and does a comparison against what is submitted to GitHub.
+Compare is considered to be the top level workflow. When used as a GitHub 
+action, this runs through three steps, outlined below.
+
+### `janit validate template [ISSUETEMPLATE] [ISSUE #]`
+This command is used to parse for `.github/ISSUE_TEMPLATE/*.md(x)` files as a
+default, and diffs the issue template files against the body of the GitHub API
+for that issue number.
+
+- Checks if the template headings are followed.
+- Checks if the template comment text is removed.
+- Checks for custom definitions of the template formatting. (Stretch)
+
+### `janit validate commit [COMMITTEMPLATE] -n [NUMBER OF COMMITS]`
+This command will look at the last _n_ number of git log messages and compare
+them against `.github/ISSUE_TEMPLATE/*.cmt` as a default. In a Github Action,
+it will default to `-n 1`. The intention here is to be able to parse commit 
+formatting and take action on the commits. For companies or projects that 
+require Ticket-Based Engineering practices tied to a ticketing system, this is 
+a good way to help along enforcement.
+
+If the binary fails the commit as a precommit hook, the user can fix up the
+message locally. If a merge is approved on a PR, it can be caught in CI and
+make more uniform commit message suggestion. It will fail, NOT ERROR.
+
+### `janit validate label [label_lookup_table] [GHIssue#]`
+This command will look at a GitHub issue number in the current repo, and compare
+the body of the issue against `.github/ISSUE_TEMPLATE/label_table.yml`.
+Once the input is validated, move to "labelling" section. This is not a 
+labelling workflow, it is a validation workflow, and will not be called from 
+the label subcommand.
+
+Provide a lookup table file with the strings to parse for.
+"The issue is with:"
+"This issue affects:"
+Provide a set of label rules that can be attached to them.
+"The issue is with:" "everything"
+- [bug,crash]
+"This issue affects:" "ACLs"
+- [theme/*]
+"I am not sure" - suggest but not apply tags.
+If no strings from validation, then fail the issue.
+Output whats missing, output recommend labels. 
+Label applier:
+janit labels apply [GHIssue#]
+Once:
+template is verified
+Lookup table has no errors
+Label exists as code in .github
+Apply to issue.
+
+## Project Layout
+- `build` - Used to store build configurations for CI and dockerfiles.
+- `bin` - Ignored by git, but place your build artifacts here.
