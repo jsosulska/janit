@@ -21,7 +21,7 @@ On every run, diff labels from github and file. Warn on the diff.
 
 ## Template & Git commit message compare: 
 
-> `janit compare [`.github/ISSUE_TEMPLATE/*`] [URL/SHA]
+> `janit compare [.github/ISSUE_TEMPLATE/*] [URL/SHA]`
 
 A binary that takes a local input (Issue Template, Git Commit template, label
 lookup table), and does a comparison against what is submitted to GitHub.
@@ -79,6 +79,7 @@ Output whats missing, output recommend labels.
 
 ## Label applier:
 > janit labels apply [GHIssue#]
+
 Once:
 template is verified
 Lookup table has no errors
