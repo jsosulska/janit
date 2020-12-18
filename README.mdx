@@ -29,6 +29,7 @@ Compare is considered to be the top level workflow. When used as a GitHub
 action, this runs through three steps, outlined below.
 
 >  `janit validate template [ISSUETEMPLATE] [ISSUE #]`
+
 This command is used to parse for `.github/ISSUE_TEMPLATE/*.md(x)` files as a
 default, and diffs the issue template files against the body of the GitHub API
 for that issue number.
@@ -38,6 +39,7 @@ for that issue number.
 - Checks for custom definitions of the template formatting. (Stretch)
 
 > `janit validate commit [COMMITTEMPLATE] -n [NUMBER OF COMMITS]`
+
 This command will look at the last _n_ number of git log messages and compare
 them against `.github/ISSUE_TEMPLATE/*.cmt` as a default. In a Github Action,
 it will default to `-n 1`. The intention here is to be able to parse commit 
@@ -50,15 +52,15 @@ message locally. If a merge is approved on a PR, it can be caught in CI and
 make more uniform commit message suggestion. It will fail, NOT ERROR.
 
 > `janit validate label [label_lookup_table] [GHIssue#]`
+
 This command will look at a GitHub issue number in the current repo, and compare
 the body of the issue against `.github/ISSUE_TEMPLATE/label_table.yml`.
 Once the input is validated, move to "labelling" section. This is not a 
 labelling workflow, it is a validation workflow, and will not be called from 
-the label subcommand.
-
-Provide a lookup table file with the strings to parse for.
+the label subcommand. Provide a lookup table file with the strings to parse for.
 
 "The issue is with:"
+
 "This issue affects:"
 
 Provide a set of label rules that can be attached to them.
@@ -78,6 +80,7 @@ If no strings from validation, then fail the issue.
 Output whats missing, output recommend labels. 
 
 ## Label applier:
+
 > janit labels apply [GHIssue#]
 
 Once:
