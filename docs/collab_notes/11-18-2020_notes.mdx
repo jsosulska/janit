@@ -1,0 +1,56 @@
+# 12/17/2020
+
+Rob and Jono discussed several workflows.
+
+## Github authentication workflow
+Github token is used to authenticate with github. This is for syncing information from the repo into GitHub.
+
+In order to parse this token to the cli, users will to use one of the following options:
+
+Order of precedence 
+CLI input via argument or flag
+ENV VAR - Environment variable
+Config file that includes the api token - (local dev only)
+
+
+## Labels as code workflows
+Commands:
+	Init - creates local copy of labels.json from github api response
+	Diff - performs a comparison between local and remote label states
+	Apply - check the labels.json file exists, performs a diff, apply diff (specify which version is authoritative) this would be a push or pull command based on user input.
+
+Workflow 1:  `init` command
+Pull the current labels from the github api response of that specific repository.
+	_Preflight_
+	Requires a .git folder
+	Requires a .github
+
+Logic:
+If labels.json does not exist, 
+Then
+Query the GitHub API for this repository
+And then, store the response as `api_label_data`.
+And then, create `.github/janit/labels.json` (local state) file.
+And then, store `api_label_data` in `.github/janit/labels.json`.
+
+Workflow 2:  `diff` command
+If `labels.json` (local state) does exist,
+Then
+Query the GitHub API for this repository
+And then, store the response as `api_label_data` (remote state).
+And then, diff between that and response from the github API.
+And then, a warning message is given with information about syncing labels.	
+		
+WF 3: `Apply` Workflow
+Runs `diff` workflow.
+If a diff exists,
+	Then
+	Prompt user for which source to view as authoritative
+		If the user chooses the local labels file (local state)
+		Then
+		Push the labels that are in `.github/janit/labels.json`.
+		And then, delete the additional labels
+
+		If the user chooses the GitHub API for the repository (remote state)
+		Then
+		Add the new label from diff to the labels that are in `.github/janit/labels.json`.
