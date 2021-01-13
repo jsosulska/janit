@@ -7,7 +7,7 @@ Github token is used to authenticate with github. This is for syncing informatio
 
 In order to parse this token to the cli, users will to use one of the following options:
 
-Order of precedence 
+*Order of precedence*
 CLI input via argument or flag
 ENV VAR - Environment variable
 Config file that includes the api token - (local dev only)
@@ -28,7 +28,7 @@ Pull the current labels from the github api response of that specific repository
 Logic:
 If labels.json does not exist, 
 Then
-Query the GitHub API for this repository
+Query the GitHub API for this repository with `API Token`.
 And then, store the response as `api_label_data`.
 And then, create `.github/janit/labels.json` (local state) file.
 And then, store `api_label_data` in `.github/janit/labels.json`.
